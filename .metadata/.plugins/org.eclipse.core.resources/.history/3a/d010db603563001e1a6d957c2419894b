@@ -27,8 +27,6 @@
 #include <ti/drivers/Timer.h>
 #include <ti/sysbios/knl/Semaphore.h>
 #include <stdbool.h>
-#include <ndk_config.h>
-
 
 
 #include <stdio.h>
@@ -42,9 +40,8 @@
 
 typedef struct _BiosStruct
 {
+    Task_Handle payloadTask;
     Task_Handle uartReadTask;
-    Task_Handle interruptPayloadTask;
-    Task_Handle uartPayloadTask;
     Semaphore_Handle uartReadSemaphore;
     Semaphore_Handle payloadSemaphore;
     Swi_Handle timer0Swi;
@@ -55,31 +52,19 @@ typedef struct _BiosStruct
 } BiosStruct;
 
 
-typedef struct _MessageQ
-{
-    int msgReading;
-    int msgWriting;
-    char messages[NUMMSGS];
-} MessageQ;
 
-
-typedef struct _PayloadQ
-{
-    int payloadReading;
-    int payloadWriting;
-    char payloads[NUMPAYLOADS];
-} PayloadQ;
 
 
 typedef struct _GlobalStruct
 {
     int timer0Period;
     int errorCounts[NUMERROR];
+    Callback callbacks[NUMCALLBACKS];
     BiosStruct bios;
+    MessageQ uartInQ;
+    PayloadQ payloadQ;
     UART_Handle uart;
     Timer_Handle timer0;
-    MessageQ uartMessageQ;
-    PayloadQ payloadQ;
 } GlobalStruct;
 
 

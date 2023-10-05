@@ -3543,3 +3543,91 @@ Finished building: "syscfg/ti_drivers_config.c"
 gmake: Target 'all' not remade because of errors.
 
 **** Build Finished ****
+
+**** Clean-only build of configuration Debug for project uartecho_MSP_EXP432E401Y_tirtos_ccs ****
+
+"C:\\ti\\ccs1240\\ccs\\utils\\bin\\gmake" -k -j 12 clean -O 
+ 
+DEL /F  "syscfg\ti_drivers_config.h" "syscfg\ti_utils_build_linker.cmd.exp" "syscfg\syscfg_c.rov.xs"  "syscfg\ti_drivers_config.c"  "uartecho_MSP_EXP432E401Y_tirtos_ccs.out" 
+DEL /F "library.obj" "main.obj" "mainThread.obj" "syscfg\ti_drivers_config.obj" 
+DEL /F "library.d" "main.d" "mainThread.d" "syscfg\ti_drivers_config.d" 
+RMDIR /S/Q  "syscfg\" 
+Could Not Find C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\uartecho_MSP_EXP432E401Y_tirtos_ccs.out
+Finished clean
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project tirtos_builds_MSP_EXP432E401Y_release_ccs ****
+
+"C:\\ti\\ccs1240\\ccs\\utils\\bin\\gmake" -k -j 12 all -O 
+ 
+making ../src/sysbios/sysbios.aem4f ...
+gmake[1]: Nothing to be done for 'all'.
+gmake[1]: Nothing to be done for 'configPkg/linker.cmd'.
+making ../src/sysbios/sysbios.aem4f ...
+gmake[2]: Nothing to be done for 'all'.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project uartecho_MSP_EXP432E401Y_tirtos_ccs ****
+
+"C:\\ti\\ccs1240\\ccs\\utils\\bin\\gmake" -k -j 12 all -O 
+ 
+Building file: "../uartecho.syscfg"
+Invoking: SysConfig
+"C:/ti/sysconfig_1.5.0/sysconfig_cli.bat" -s "C:/ti/simplelink_msp432e4_sdk_4_20_00_12/.metadata/product.json" -o "syscfg" "C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/uartecho.syscfg" --compiler ccs
+Running script...
+Validating...
+Generating Code...
+    '/ti/drivers' -> '/ti/devices/driverlib'
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\ti_drivers_config.c...
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\ti_drivers_config.h...
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\ti_utils_build_linker.cmd.exp...
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\syscfg_c.rov.xs...
+Finished building: "../uartecho.syscfg"
+ 
+Building file: "../library.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="library.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "../library.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'library.obj' failed
+"..\library.h", line 62: error #20: identifier "Callback" is undefined
+"..\library.h", line 64: error #20: identifier "MessageQ" is undefined
+"..\library.h", line 65: error #20: identifier "PayloadQ" is undefined
+3 errors detected in the compilation of "../library.c".
+gmake: *** [library.obj] Error 1
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="main.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"..\library.h", line 62: error #20: identifier "Callback" is undefined
+"..\library.h", line 64: error #20: identifier "MessageQ" is undefined
+"..\library.h", line 65: error #20: identifier "PayloadQ" is undefined
+"../main.c", line 18: error #137: struct "_BiosStruct" has no field "messageTask"
+"../main.c", line 79: warning #225-D: function "ti_ndk_config_Global_startupFxn" declared implicitly
+4 errors detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+Building file: "../mainThread.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="mainThread.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "../mainThread.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'mainThread.obj' failed
+"..\library.h", line 62: error #20: identifier "Callback" is undefined
+"..\library.h", line 64: error #20: identifier "MessageQ" is undefined
+"..\library.h", line 65: error #20: identifier "PayloadQ" is undefined
+"../mainThread.c", line 13: warning #994-D: missing return statement at end of non-void function "mainThread"
+3 errors detected in the compilation of "../mainThread.c".
+gmake: *** [mainThread.obj] Error 1
+Building file: "syscfg/ti_drivers_config.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="syscfg/ti_drivers_config.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --obj_directory="syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "syscfg/ti_drivers_config.c"
+Finished building: "syscfg/ti_drivers_config.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****

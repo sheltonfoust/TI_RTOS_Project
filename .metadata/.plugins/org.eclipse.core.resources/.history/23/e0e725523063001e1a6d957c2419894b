@@ -407,18 +407,175 @@ void printParse(char* input)
 // Threading
 
 
-void TaskUartRead()
+// When HWI happens, post an SWI and get it to lower priority
+void Timer0Callback(Timer_Handle myTimerHandle, int_fast16_t status)
 {
-
+    Glo.callbacks[0].hwiFlag = false;
+    Swi_post(Glo.bios.timer0Swi);
 }
 
+
+// gate is used to prevent the callback stream from being read and being written at the same time
+void SWITimer0(UArg arg0, UArg arg1)
+{
+    uint32_t gateKey;
+    gateKey = GateSwi_enter(Glo.bios.callbackGate);
+    if(Glo.callbacks[0].count != 0)
+    {
+        if (Glo.callbacks[0].count > 0)
+        {
+            Glo.callbacks[0].count--;
+        }
+        if (Glo.callbacks[0].HWI_flag == false)
+        {
+            AddPayload(Glo.callbacks[0].payload); // Add callback payload to payload queue
+        }
+        Glo.adcBufCtrl.callback0_count++;
+    }
+    GateSwi_leave(Glo.bios.callbackGate, gateKey);
+}
+
+
+void TaskPayload()
+{
+    int32_t payloadNext;
+    int32_t index;
+    char *payload;
+    uint32_t gateKey;
+
+    while(1)
+    {
+        Semaphore_pend(Glo.bios.payloadSemaphore, BIOS_WAIT_FOREVER);
+        index = Glo.payloadQ.payloadReading;
+        payload = Glo.payloadQ.payloads[index];
+        parseMessage(payload);
+
+        gateKey = GateSwi_enter(Glo.bios.payloadWriteGate);
+        payloadNext = index + 1;
+        if(payloadNext >= NUMPAYLOADS)
+            payloadNext = 0;
+        Glo.payloadQ.payloadReading = payloadNext;
+        GateSwi_leave(Glo.bios.payloadWriteGate, gateKey);
+    }
+}
+
+
+void TaskUartRead()
+{
+        char inputChar;
+        char inputLine[MAXLEN + 1];
+        inputLine[0] = 0;
+
+        int lineLength = 0;
+        while (1)
+        {
+            UART_read(Glo.uart, &inputChar, 1);
+            UART_write(Glo.uart, &inputChar, 1);
+
+            if (lineLength > MAXLEN)
+            {
+                char output[] = "\n\rOVERFLOW\n\r";
+                Glo.errorCounts[MSG_OVERFLOW]++;
+                UART_write(Glo.uart, &output, strlen(output));
+                lineLength = 0;
+                inputLine[lineLength] = 0;
+            }
+            else if (inputChar == '\n' || inputChar == '\r') // Enter pressed
+            {
+                char output[MAXLEN];
+                sprintf(output, "\n\r");
+                UART_write(Glo.uart, &output, strlen(output));
+
+                int payloadIndex = Glo.payloadQ.payloadWriting;
+                strcpy(Glo.payloadQ.payloads[payloadIndex], inputLine);
+
+                if(Glo.payloadQ.payloadWriting == NUMPAYLOADS - 1)
+                {
+                    Glo.payloadQ.payloadWriting = 0;
+                }
+                else
+                {
+                    Glo.payloadQ.payloadWriting++;
+                }
+            }
+            else if (inputChar == '\b' || inputChar == 127) // Backspace or Delete
+            {
+                if(lineLength > 0)
+                {
+                    inputLine[lineLength] = 0;
+                    lineLength--;
+                }
+            }
+            else // Add character to line
+            {
+                inputLine[lineLength] = inputChar;
+                inputLine[lineLength + 1] = 0;
+                lineLength++;
+            }
+        }
+}
+
+
+void TaskParseMessage()
+{
+    char        inputLine[MAXLEN + 1];
+    inputLine[0] = 0;
+    while(1)
+    {
+        int payloadIndex = Glo.payloadQ.payloadReading;
+        strcpy(inputLine, Glo.payloadQ[payloadIndex]);
+        if (Glo.payloadQ.payloadReading == NUMPAYLOADS - 1)
+        {
+            Glo.payloadQ.payloadReading = 0;
+        }
+        else
+        {
+            Glo.payloadQ.payloadReading++;
+        }
+        if(strlen(inputLine) == 0)
+        {
+            // Do nothing if line is empty
+        }
+        else if (startsWith(inputLine, "-about"))
+            aboutParse();
+        else if (startsWith(inputLine, "-error"))
+            errorParse(inputLine);
+        else if (startsWith(inputLine, "-gpio"))
+            gpioParse(inputLine);
+        else if (startsWith(inputLine, "-help"))
+            helpParse(inputLine);
+        else if (startsWith(inputLine, "-memr"))
+            memoryReadParse(inputLine);
+        else if (startsWith(inputLine, "-print"))
+            printParse(inputLine);
+        else // Invalid operation
+        {
+            char output[MAXLEN];
+            sprintf(output, "Operation \"%s\" not valid.\n\r\n\r", inputLine);
+            UART_write(Glo.uart, &output, strlen(output));
+            Glo.errorCounts[INVALID_OPERATION]++;
+        }
+        lineLength = 0;
+        inputLine[lineLength] = 0;
+    }
+}
+
+
+void MsgAddByte(char *input)
+{
+    int32_t msgNext;
+    uint32_t gateKey;
+    if(*input == '\r' || *input == '\n')
+    {
+        if (Glo.uartInQ.messages[Glo.uartInQ.msgWriting].msgCount > 0)
+            Glo.MsgQ.messages[Glo.uartInQ.msgWriting].msgBuf[Glo.MsgQ.messages[Glo.MsgQ.msgWriting].msgCount] = 0;
+        gateKey = Gate
+    }
+}
 
 
 // End Threading
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

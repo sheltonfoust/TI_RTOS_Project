@@ -407,18 +407,115 @@ void printParse(char* input)
 // Threading
 
 
+
+
+
 void TaskUartRead()
 {
+        char inputChar;
+        char inputLine[MAXLEN + 1];
+        inputLine[0] = 0;
 
+        int lineLength = 0;
+        while (1)
+        {
+            UART_read(Glo.uart, &inputChar, 1);
+            UART_write(Glo.uart, &inputChar, 1);
+
+            if (lineLength > MAXLEN)
+            {
+                char output[] = "\n\rOVERFLOW\n\r";
+                Glo.errorCounts[MSG_OVERFLOW]++;
+                UART_write(Glo.uart, &output, strlen(output));
+                lineLength = 0;
+                inputLine[lineLength] = 0;
+            }
+            else if (inputChar == '\n' || inputChar == '\r') // Enter pressed
+            {
+                char output[MAXLEN];
+                sprintf(output, "\n\r");
+                UART_write(Glo.uart, &output, strlen(output));
+
+                int payloadIndex = Glo.payloadQ.payloadWriting;
+                strcpy(Glo.payloadQ.payloads[payloadIndex], inputLine);
+
+                if(Glo.payloadQ.payloadWriting == NUMPAYLOADS - 1)
+                {
+                    Glo.payloadQ.payloadWriting = 0;
+                }
+                else
+                {
+                    Glo.payloadQ.payloadWriting++;
+                }
+            }
+            else if (inputChar == '\b' || inputChar == 127) // Backspace or Delete
+            {
+                if(lineLength > 0)
+                {
+                    inputLine[lineLength] = 0;
+                    lineLength--;
+                }
+            }
+            else // Add character to line
+            {
+                inputLine[lineLength] = inputChar;
+                inputLine[lineLength + 1] = 0;
+                lineLength++;
+            }
+        }
 }
+
+
+void TaskParseMessage()
+{
+    char        inputLine[MAXLEN + 1];
+    inputLine[0] = 0;
+    while(1)
+    {
+        int payloadIndex = Glo.payloadQ.payloadReading;
+        strcpy(inputLine, Glo.payloadQ[payloadIndex]);
+        if (Glo.payloadQ.payloadReading == NUMPAYLOADS - 1)
+        {
+            Glo.payloadQ.payloadReading = 0;
+        }
+        else
+        {
+            Glo.payloadQ.payloadReading++;
+        }
+        if(strlen(inputLine) == 0)
+        {
+            // Do nothing if line is empty
+        }
+        else if (startsWith(inputLine, "-about"))
+            aboutParse();
+        else if (startsWith(inputLine, "-error"))
+            errorParse(inputLine);
+        else if (startsWith(inputLine, "-gpio"))
+            gpioParse(inputLine);
+        else if (startsWith(inputLine, "-help"))
+            helpParse(inputLine);
+        else if (startsWith(inputLine, "-memr"))
+            memoryReadParse(inputLine);
+        else if (startsWith(inputLine, "-print"))
+            printParse(inputLine);
+        else // Invalid operation
+        {
+            char output[MAXLEN];
+            sprintf(output, "Operation \"%s\" not valid.\n\r\n\r", inputLine);
+            UART_write(Glo.uart, &output, strlen(output));
+            Glo.errorCounts[INVALID_OPERATION]++;
+        }
+        lineLength = 0;
+        inputLine[lineLength] = 0;
+    }
+}
+
+
 
 
 
 // End Threading
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,14 +1,11 @@
 #include "library.h"
 extern Task_Handle task0;
 extern Task_Handle task1;
-extern Task_Handle task2;
 extern Semaphore_Handle semaphore0;
 extern Semaphore_Handle semaphore1;
 extern Swi_Handle swi0;
-extern Swi_Handle swi1;
 extern GateSwi_Handle gateSwi0;
-extern GateSwi_Handle gateSwi1;
-extern GateSwi_Handle gateSwi2;
+
 
 
 int main(void)
@@ -18,20 +15,12 @@ int main(void)
     Glo.payloadQ.payloadReading = 0;
     Glo.payloadQ.payloadWriting = 0;
     Glo.timer0Period = 1000000;
-
-    Glo.bios.uartReadTask = task0;
-    Glo.bios.interruptPayloadTask = task1;
-    Glo.bios.uartPayloadTask = task2;
+    Glo.bios.messageTask = task0;
+    Glo.bios.uartReadTask = task1;
     Glo.bios.uartReadSemaphore = semaphore0;
     Glo.bios.payloadSemaphore = semaphore1;
     Glo.bios.timer0Swi = swi0;
-    Glo.bios.switch0Swi = swi1;
-    GateSwi_Handle callbackGate = gateSwi0;
-    GateSwi_Handle payloadWriteGate = gateSwi1;
-    GateSwi_Handle messageWriteGate = gateSwi2;
-
-
-
+    Glo.bios.callbackGate = gateSwi0;
 
     int i;
     for (i = 0; i < NUMERROR; i++)
@@ -41,11 +30,21 @@ int main(void)
 
     for (i = 0; i < NUMMSGS; i++)
     {
-        Glo.uartMessageQ.messages[i][0] = 0;
+        Glo.uartInQ.messages[i].index = i;
+        Glo.uartInQ.messages[i].msgBuffer[0] = 0;
+        Glo.uartInQ.messages[i].msgCount = 0;
     }
     for (i = 0; i < NUMPAYLOADS; i++)
     {
         Glo.payloadQ.payloads[i][0] = 0;
+    }
+
+    for (i = 0; i < NUMCALLBACKS; i++)
+    {
+        Glo.callbacks[i].index = i;
+        Glo.callbacks[i].count = 0;
+        Glo.callbacks[i].hwiFlag = false;
+        Glo.callbacks[i].payload[0] = 0;
     }
 
     GPIO_init();

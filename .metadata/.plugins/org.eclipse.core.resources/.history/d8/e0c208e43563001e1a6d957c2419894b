@@ -1,14 +1,11 @@
 #include "library.h"
 extern Task_Handle task0;
 extern Task_Handle task1;
-extern Task_Handle task2;
 extern Semaphore_Handle semaphore0;
 extern Semaphore_Handle semaphore1;
 extern Swi_Handle swi0;
-extern Swi_Handle swi1;
 extern GateSwi_Handle gateSwi0;
-extern GateSwi_Handle gateSwi1;
-extern GateSwi_Handle gateSwi2;
+
 
 
 int main(void)
@@ -41,11 +38,21 @@ int main(void)
 
     for (i = 0; i < NUMMSGS; i++)
     {
-        Glo.uartMessageQ.messages[i][0] = 0;
+        Glo.uartInQ.messages[i].index = i;
+        Glo.uartInQ.messages[i].msgBuffer[0] = 0;
+        Glo.uartInQ.messages[i].msgCount = 0;
     }
     for (i = 0; i < NUMPAYLOADS; i++)
     {
         Glo.payloadQ.payloads[i][0] = 0;
+    }
+
+    for (i = 0; i < NUMCALLBACKS; i++)
+    {
+        Glo.callbacks[i].index = i;
+        Glo.callbacks[i].count = 0;
+        Glo.callbacks[i].hwiFlag = false;
+        Glo.callbacks[i].payload[0] = 0;
     }
 
     GPIO_init();

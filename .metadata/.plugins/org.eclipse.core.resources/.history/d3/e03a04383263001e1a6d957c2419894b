@@ -27,8 +27,6 @@
 #include <ti/drivers/Timer.h>
 #include <ti/sysbios/knl/Semaphore.h>
 #include <stdbool.h>
-#include <ndk_config.h>
-
 
 
 #include <stdio.h>
@@ -42,32 +40,45 @@
 
 typedef struct _BiosStruct
 {
+    Task_Handle messageTask;
     Task_Handle uartReadTask;
-    Task_Handle interruptPayloadTask;
-    Task_Handle uartPayloadTask;
     Semaphore_Handle uartReadSemaphore;
     Semaphore_Handle payloadSemaphore;
     Swi_Handle timer0Swi;
-    Swi_Handle switch0Swi;
     GateSwi_Handle callbackGate;
-    GateSwi_Handle payloadWriteGate;
-    GateSwi_Handle messageWriteGate;
 } BiosStruct;
 
 
+typedef struct _callback
+{
+    int index;
+    int count;
+    bool hwiFlag; // used for audio
+    char payload[MAXLEN];
+} Callback;
+
+typedef struct _message
+{
+    int index; // the index in the messages array, for debugging only
+    int msgCount; // bytes going in, used to detect overflow
+    char msgBuffer[MAXLEN];
+} Message;
+
+// Queues multiple messages if input types really fast. Piles up messages from the console
+// Only really useful if using an external app.
 typedef struct _MessageQ
 {
     int msgReading;
     int msgWriting;
-    char messages[NUMMSGS];
+    Message messages[NUMMSGS];
 } MessageQ;
 
 
-typedef struct _PayloadQ
+typedef struct _PayloadQ // Parse and Process queue
 {
-    int payloadReading;
-    int payloadWriting;
-    char payloads[NUMPAYLOADS];
+    int payloadReading; // the index of which message is being read
+    int payloadWriting; // the index of which message is being written
+    char payloads[NUMPAYLOADS][MAXLEN];
 } PayloadQ;
 
 
@@ -75,11 +86,12 @@ typedef struct _GlobalStruct
 {
     int timer0Period;
     int errorCounts[NUMERROR];
+    Callback callbacks[NUMCALLBACKS];
     BiosStruct bios;
+    MessageQ uartInQ;
+    PayloadQ payloadQ;
     UART_Handle uart;
     Timer_Handle timer0;
-    MessageQ uartMessageQ;
-    PayloadQ payloadQ;
 } GlobalStruct;
 
 

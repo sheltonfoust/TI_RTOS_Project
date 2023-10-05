@@ -34,7 +34,6 @@
 
 /* ================ Clock configuration ================ */
 var Clock = xdc.useModule('ti.sysbios.knl.Clock');
-var GateSwi = xdc.useModule('ti.sysbios.gates.GateSwi');
 /*
  * Default value is family dependent. For example, Linux systems often only
  * support a minimum period of 10000 us and multiples of 10000 us.
@@ -598,7 +597,7 @@ var task1Params = new Task.Params();
 task1Params.instance.name = "task1";
 task1Params.stackSize = 4096;
 task1Params.priority = 1;
-Program.global.task1 = Task.create("&TaskInterruptPayload", task1Params);
+Program.global.task1 = Task.create("&TaskPayload", task1Params);
 var task2Params = new Task.Params();
 task2Params.instance.name = "task2";
 task2Params.stackSize = 4096;
@@ -618,12 +617,3 @@ var swi1Params = new Swi.Params();
 swi1Params.instance.name = "swi1";
 swi1Params.priority = 1;
 Program.global.swi1 = Swi.create("&SWI_switch1", swi1Params);
-var gateSwi0Params = new GateSwi.Params();
-gateSwi0Params.instance.name = "gateSwi0";
-Program.global.gateSwi0 = GateSwi.create(gateSwi0Params);
-var gateSwi1Params = new GateSwi.Params();
-gateSwi1Params.instance.name = "gateSwi1";
-Program.global.gateSwi1 = GateSwi.create(gateSwi1Params);
-var gateSwi2Params = new GateSwi.Params();
-gateSwi2Params.instance.name = "gateSwi2";
-Program.global.gateSwi2 = GateSwi.create(gateSwi2Params);
