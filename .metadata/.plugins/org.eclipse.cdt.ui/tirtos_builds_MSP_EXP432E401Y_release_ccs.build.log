@@ -1,0 +1,24 @@
+
+**** Build of configuration Debug for project tirtos_builds_MSP_EXP432E401Y_release_ccs ****
+
+"C:\\ti\\ccs1240\\ccs\\utils\\bin\\gmake" -k -j 12 all -O 
+ 
+        1 file(s) copied.
+making ../src/sysbios/sysbios.aem4f ...
+gmake[1]: Nothing to be done for 'all'.
+Building file: "../release.cfg"
+Invoking: XDCtools
+"C:/ti/ccs1240/xdctools_3_62_01_16_core/xs" --xdcpath="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source;C:/ti/simplelink_msp432e4_sdk_4_20_00_12/kernel/tirtos/packages;" xdc.tools.configuro -o configPkg -t ti.targets.arm.elf.M4F -p ti.platforms.msp432:MSP432E401Y -r release -c "C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS" "../release.cfg"
+configuring release.xem4f from package/cfg/release_pem4f.cfg ...
+generating custom ti.sysbios library makefile ... 
+Starting build of library sources ...
+making C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/src/sysbios/sysbios.aem4f ...
+Build of libraries done.
+clem4f package/cfg/release_pem4f.c ...
+Finished building: "../release.cfg"
+ 
+        1 file(s) copied.
+making ../src/sysbios/sysbios.aem4f ...
+gmake[2]: Nothing to be done for 'all'.
+
+**** Build Finished ****

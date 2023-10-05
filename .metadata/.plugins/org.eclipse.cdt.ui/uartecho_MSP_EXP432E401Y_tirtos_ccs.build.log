@@ -1,0 +1,77 @@
+
+**** Build of configuration Debug for project uartecho_MSP_EXP432E401Y_tirtos_ccs ****
+
+"C:\\ti\\ccs1240\\ccs\\utils\\bin\\gmake" -k -j 12 all -O 
+ 
+Building file: "../uartecho.syscfg"
+Invoking: SysConfig
+"C:/ti/sysconfig_1.5.0/sysconfig_cli.bat" -s "C:/ti/simplelink_msp432e4_sdk_4_20_00_12/.metadata/product.json" -o "syscfg" "C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/uartecho.syscfg" --compiler ccs
+Running script...
+Validating...
+Generating Code...
+    '/ti/drivers' -> '/ti/devices/driverlib'
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\ti_drivers_config.c...
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\ti_drivers_config.h...
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\ti_utils_build_linker.cmd.exp...
+Writing C:\Users\sfous\EmbeddedSystemsProject\uartecho_MSP_EXP432E401Y_tirtos_ccs\Debug\syscfg\syscfg_c.rov.xs...
+Finished building: "../uartecho.syscfg"
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="main.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 10: error #20: identifier "task0" is undefined
+"../main.c", line 11: error #20: identifier "task1" is undefined
+"../main.c", line 12: error #20: identifier "semaphore0" is undefined
+"../main.c", line 13: error #20: identifier "semaphore1" is undefined
+"../main.c", line 14: error #20: identifier "swi0" is undefined
+"../main.c", line 15: error #20: identifier "gateSwi0" is undefined
+"../main.c", line 71: warning #225-D: function "ti_ndk_config_Global_startupFxn" declared implicitly
+6 errors detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+Building file: "../library.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="library.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "../library.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'library.obj' failed
+"../library.c", line 429: error #137: struct "_callback" has no field "HWI_flag"
+"../library.c", line 431: warning #225-D: function "AddPayload" declared implicitly
+"../library.c", line 433: error #137: struct "_GlobalStruct" has no field "adcBufCtrl"
+"../library.c", line 447: error #137: struct "_GlobalStruct" has no field "PayloaQ"
+"../library.c", line 451: error #137: struct "_BiosStruct" has no field "payloadWriteGate"
+"../library.c", line 457: error #137: struct "_GlobalStruct" has no field "errors"
+"../library.c", line 464: error #137: struct "_GlobalStruct" has no field "PayloadQ"
+"../library.c", line 465: error #137: struct "_GlobalStruct" has no field "PayloadQ"
+"../library.c", line 467: error #137: struct "_BiosStruct" has no field "payloadWriteGate"
+"../library.c", line 491: warning #225-D: function "parseMessage" declared implicitly
+"../library.c", line 493: error #137: struct "_BiosStruct" has no field "payloadWriteGate"
+"../library.c", line 498: error #137: struct "_BiosStruct" has no field "payloadWriteGate"
+"../library.c", line 566: error #143: expression must have pointer-to-object type
+"../library.c", line 580: error #167: too few arguments in function call
+"../library.c", line 598: error #20: identifier "lineLength" is undefined
+"../library.c", line 611: error #137: struct "_GlobalStruct" has no field "MsgQ"
+"../library.c", line 611: error #137: struct "_GlobalStruct" has no field "MsgQ"
+"../library.c", line 611: error #137: struct "_GlobalStruct" has no field "MsgQ"
+"../library.c", line 612: error #20: identifier "Gate" is undefined
+"../library.c", line 613: error #66: expected a ";"
+"../library.c", line 606: warning #179-D: variable "msgNext" was declared but never referenced
+"../library.c", line 607: warning #552-D: variable "gateKey" was set but never used
+18 errors detected in the compilation of "../library.c".
+gmake: *** [library.obj] Error 1
+Building file: "../mainThread.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="mainThread.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "../mainThread.c"
+"../mainThread.c", line 18: warning #994-D: missing return statement at end of non-void function "mainThread"
+Finished building: "../mainThread.c"
+ 
+Building file: "syscfg/ti_drivers_config.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/third_party/CMSIS/Include" --include_path="C:/ti/simplelink_msp432e4_sdk_4_20_00_12/source/ti/posix/ccs" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on --preproc_with_compile --preproc_dependency="syscfg/ti_drivers_config.d_raw" --include_path="C:/Users/sfous/EmbeddedSystemsProject/uartecho_MSP_EXP432E401Y_tirtos_ccs/Debug/syscfg" --obj_directory="syscfg" --cmd_file="C:/Users/sfous/EmbeddedSystemsProject/tirtos_builds_MSP_EXP432E401Y_release_ccs/Debug/configPkg/compiler.opt"  "syscfg/ti_drivers_config.c"
+Finished building: "syscfg/ti_drivers_config.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
